@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ticketing_db
+    username: ticket_user
+    password: ticket_password
+  jpa:
+    hibernate:
+      # Important: Flyway manages the schema, Hibernate only validates it
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
