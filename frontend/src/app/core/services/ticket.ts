@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class Ticket {
+export class TicketService {
   private http=inject(HttpClient);
   private readonly API_URL = 'http://localhost:8080/api/v1/tickets';
   purchaseTicket(eventId:string, userId: string, price: number):Observable<any> {
