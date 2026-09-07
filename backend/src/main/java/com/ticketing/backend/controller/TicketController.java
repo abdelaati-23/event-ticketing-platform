@@ -5,6 +5,7 @@ import com.ticketing.backend.domain.dto.TicketPurchaseRequest;
 import com.ticketing.backend.domain.dto.TicketResponse;
 import com.ticketing.backend.domain.entity.Ticket;
 import com.ticketing.backend.services.TicketService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/purchase")
-    public ResponseEntity<TicketResponse> purchaseTicket(@RequestBody TicketPurchaseRequest request) {
+    public ResponseEntity<TicketResponse> purchaseTicket(@Valid @RequestBody TicketPurchaseRequest request) {
 
         Ticket ticket = ticketService.purchaseTicket(
                 request.eventId(),
