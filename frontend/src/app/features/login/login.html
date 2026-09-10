@@ -1,0 +1,44 @@
+<div style="border: 1px solid #ccc; padding: 20px; max-width: 300px; border-radius: 8px;">
+  <h2>Account Login</h2>
+
+  @if (status() === 'success') {
+    <p style="color: green; font-weight: bold;">Login successful! You are now authenticated.</p>
+  } @else {
+    <form (ngSubmit)="onSubmit()">
+      <div style="margin-bottom: 15px;">
+        <label>Email:</label><br>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          style="width: 100%; padding: 5px;">
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label>Password:</label><br>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          style="width: 100%; padding: 5px;">
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="status() === 'loading'"
+        style="padding: 10px 20px; cursor: pointer;">
+        @if (status() === 'loading') {
+          Authenticating...
+        } @else {
+          Sign In
+        }
+      </button>
+
+      @if (status() === 'error') {
+        <p style="color: red; font-weight: bold; margin-top: 15px;">Invalid credentials.</p>
+      }
+    </form>
+  }
+</div>
