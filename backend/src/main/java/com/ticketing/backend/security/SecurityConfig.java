@@ -1,6 +1,5 @@
-package com.ticketing.backend.config;
+package com.ticketing.backend.security;
 
-import com.ticketing.backend.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
