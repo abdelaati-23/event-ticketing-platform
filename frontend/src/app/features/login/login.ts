@@ -2,10 +2,14 @@ import { Component, inject, signal } from '@angular/core';
 import {AuthService} from '../../core/services/auth';
 import {FormsModule} from '@angular/forms';
 import {Router} from "@angular/router";
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {CardModule} from "primeng/card";
+import {MessageModule} from "primeng/message";
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, ButtonModule,InputTextModule,CardModule,MessageModule ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

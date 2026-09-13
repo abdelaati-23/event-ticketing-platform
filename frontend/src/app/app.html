@@ -1,4 +1,16 @@
-<main style="padding: 40px; font-family: sans-serif;">
-  <h1>Plateforme de Billetterie</h1>
-  <router-outlet/>
+<p-toolbar>
+  <div class="p-toolbar-group-start">
+    <h2 style="margin: 0; color: #3b82f6; cursor: pointer" routerLink="/purchase"> Ticketing</h2>
+  </div>
+  <div class="p-toolbar-group-end" style="display: flex; gap: 10px;">
+    @if (authService.isAuthenticated()) {
+      <p-button label="Déconnexion" icon="pi pi-power-off" (onClick)="logout()" severity="danger" [outlined]="true"></p-button>
+    } @else {
+      <p-button label="Connexion" icon="pi pi-sign-in" routerLink="/login" [text]="true"></p-button>
+      <p-button label="Inscription" icon="pi pi-user-plus" routerLink="/register"></p-button>
+    }
+  </div>
+</p-toolbar>
+<main style="padding: 2rem;">
+  <router-outlet />
 </main>

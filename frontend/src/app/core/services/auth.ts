@@ -23,5 +23,14 @@ export class AuthService {
     localStorage.removeItem('jwt_token');
     this.isAuthenticated.set(false);
   }
+  register(email:string, password:string){
+    const payload={email,password,role:"CUSTOMER"};
+    return this.http.post<{token:string}>(`${this.API_URL}/register`,payload).pipe(
+      tap((response)=>{
+        localStorage.setItem('jwt_token',response.token);
+        this.isAuthenticated.set(true);
+      })
+    )
+  }
 
 }
