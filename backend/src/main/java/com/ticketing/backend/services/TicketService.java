@@ -1,5 +1,7 @@
 package com.ticketing.backend.services;
 
+import com.ticketing.backend.config.RabbitMQConfig;
+import com.ticketing.backend.domain.dto.TicketPurchasedEvent;
 import com.ticketing.backend.domain.entity.Event;
 import com.ticketing.backend.domain.entity.Ticket;
 import com.ticketing.backend.domain.entity.User;
@@ -9,6 +11,7 @@ import com.ticketing.backend.domain.repository.TicketRepository;
 import com.ticketing.backend.domain.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,6 +23,7 @@ public class TicketService {
     private final EventRepository eventRepository;
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
+    private final RabbitTemplate rabbitTemplate;
     @Transactional
     public Ticket purchaseTicket(UUID eventId, UUID ticketId, BigDecimal price) {
         Event event = eventRepository.findById(eventId).orElseThrow(
@@ -39,7 +43,15 @@ public class TicketService {
                 .price(price)
                 .status(TicketStatus.PAID)
                 .build();
-        return ticketRepository.save(ticket);
+
+        Ticket savedTicket = ticketRepository.save(ticket);
+        TicketPurchasedEvent purchasedEvent = new TicketPurchasedEvent(
+                savedTicket.getId().toString(),
+                eventId.toString(),
+                savedTicket.getUser().getId().toString()
+        );
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, event);
+        return savedTicket;
 
     }
 }
