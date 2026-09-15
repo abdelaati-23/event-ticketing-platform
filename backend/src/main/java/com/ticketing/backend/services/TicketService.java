@@ -25,7 +25,7 @@ public class TicketService {
     private final UserRepository userRepository;
     private final RabbitTemplate rabbitTemplate;
     @Transactional
-    public Ticket purchaseTicket(UUID eventId, UUID ticketId, BigDecimal price) {
+    public Ticket purchaseTicket(UUID eventId, UUID userId, BigDecimal price) {
         Event event = eventRepository.findById(eventId).orElseThrow(
                 ()->new IllegalArgumentException("Event not found!")
                 );
@@ -34,7 +34,7 @@ public class TicketService {
         }
         event.setAvailableSeats(event.getAvailableSeats()-1);
         eventRepository.save(event);
-        User user = userRepository.findById(ticketId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 ()->new IllegalArgumentException("User not found!")
         );
         Ticket ticket = Ticket.builder()
@@ -50,7 +50,7 @@ public class TicketService {
                 eventId.toString(),
                 savedTicket.getUser().getId().toString()
         );
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, event);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, purchasedEvent);
         return savedTicket;
 
     }

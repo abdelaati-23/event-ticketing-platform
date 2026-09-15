@@ -16,7 +16,15 @@
   </button>
 
   @if (status() === 'success') {
-    <p style="color: green; font-weight: bold; margin-top: 15px;">{{ message() }}</p>
+    <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 10px;">
+      <p-message severity="success" [text]="message()"></p-message>
+      <p-button
+        label="Télécharger mon PDF"
+        icon="pi pi-download"
+        severity="info"
+        (onClick)="downloadPdf()">
+      </p-button>
+    </div>
   }
 
   @if (status() === 'error') {

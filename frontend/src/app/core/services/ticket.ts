@@ -12,4 +12,7 @@ export class TicketService {
     const payload= {eventId, userId, price};
     return this.http.post(`${this.API_URL}/purchase`, payload);
   }
+  downloadTicketPdf(ticketId:string):Observable<Blob>{
+    return this.http.get(`${this.API_URL}/${ticketId}/pdf`, {responseType:'blob'});
+  }
 }
