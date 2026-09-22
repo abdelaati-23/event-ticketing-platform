@@ -1,0 +1,10 @@
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    # We tell Eureka NOT to register itself with itself
+    register-with-eureka: false
+    fetch-registry: false

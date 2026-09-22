@@ -1,4 +1,10 @@
+server:
+  port: 8081 # The port your ticket-service will run on
+
 spring:
+  application:
+    name: ticket-service # Crucial for Eureka
+
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:5432/ticketing_db
     username: ${DB_USER:ticket_user}
@@ -29,3 +35,11 @@ spring:
             enable: true
           ssl:
             trust: smtp.gmail.com
+
+# Eureka Client Configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
