@@ -29,3 +29,9 @@ spring:
             enable: true
           ssl:
             trust: smtp.gmail.com
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:your_api_key}
+      chat-model:
+        opened: gpt-4o-mini
+        temperature: 0.3
