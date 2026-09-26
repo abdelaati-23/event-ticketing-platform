@@ -55,6 +55,7 @@ public class TicketController {
         TicketPurchasedEvent event= new TicketPurchasedEvent(
                 ticket.getId().toString(),
                 ticket.getEvent().getId().toString(),
+                ticket.getUser().getEmail(),
                 ticket.getUser().getId().toString()
         );
         byte[] pdfBytes=pdfService.generatePdfTicket(event);
