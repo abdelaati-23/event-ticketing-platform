@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: ticketing-backend
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:5432/ticketing_db
     username: ${DB_USER:ticket_user}
@@ -39,7 +41,24 @@ spring:
           temperature: 0.3
 
 application:
+  name: ticketing-backend
   security:
     jwt:
       secret-key: ${JWT_SECRET_KEY:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
       expiration: 86400000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
