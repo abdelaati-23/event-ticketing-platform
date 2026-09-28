@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root # Required to access docker.sock on the host
+    ports:
+      - "8081:8080" # Exposed on 8081 to avoid conflicting with Spring Boot on 8080
+      - "50000:50000"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock # Grants Jenkins ability to run 'docker build'
+      - /usr/bin/docker:/usr/bin/docker # Mounts docker CLI
+
+volumes:
+  jenkins_data:

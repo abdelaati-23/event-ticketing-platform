@@ -48,6 +48,7 @@ public class TicketService {
         TicketPurchasedEvent purchasedEvent = new TicketPurchasedEvent(
                 savedTicket.getId().toString(),
                 eventId.toString(),
+                savedTicket.getUser().getEmail(),
                 savedTicket.getUser().getId().toString()
         );
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, purchasedEvent);

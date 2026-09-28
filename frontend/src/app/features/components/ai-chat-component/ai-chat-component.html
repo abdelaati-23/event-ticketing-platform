@@ -1,0 +1,47 @@
+<div class="chat-card">
+  <div class="chat-header">
+    <div class="agent-status">
+      <span class="status-dot"></span>
+      <div>
+        <h4>AI Ticketing Agent</h4>
+        <small>Autonomous Assistant</small>
+      </div>
+    </div>
+    <i class="pi pi-sparkles agent-icon"></i>
+  </div>
+
+  <div class="chat-body" #scrollContainer>
+    @for (msg of messages(); track $index) {
+      <div [class]="'message-row ' + msg.sender">
+        <div class="bubble">
+          <p>{{ msg.text }}</p>
+          <span class="time">{{ msg.time }}</span>
+        </div>
+      </div>
+    }
+
+    @if (isLoading()) {
+      <div class="message-row agent">
+        <div class="bubble typing">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="chat-footer">
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="userInput"
+      (keyup.enter)="sendMessage()"
+      placeholder="e.g. 'Book a ticket for Paul Mirabel'..."
+      [disabled]="isLoading()"
+    />
+    <p-button
+      icon="pi pi-send"
+      (onClick)="sendMessage()"
+      [disabled]="isLoading() || !userInput().trim()">
+    </p-button>
+  </div>
+</div>
